@@ -1,4 +1,4 @@
-import 'dart:io'; // <--- Need this for File
+import 'dart:io'; // <--- Required for File
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/recipe_provider.dart';
@@ -115,18 +115,26 @@ class RecipeScreen extends ConsumerWidget {
     );
   }
 
-  // --- HELPER FUNCTION TO DECIDE: FILE OR NETWORK? ---
+  // --- UPDATED HELPER FOR ASSETS ---
   Widget _buildRecipeImage(String path) {
     if (path.startsWith('http')) {
-      // It's a URL (Internet)
+      // 1. Internet URL
       return Image.network(
         path,
         fit: BoxFit.cover,
         width: double.infinity,
         errorBuilder: (c, e, s) => Container(color: Colors.grey[200], child: const Icon(Icons.broken_image)),
       );
+    } else if (path.startsWith('assets/')) {
+      // 2. Local Asset (NEW)
+      return Image.asset(
+        path,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        errorBuilder: (c, e, s) => Container(color: Colors.grey[200], child: const Icon(Icons.image)),
+      );
     } else {
-      // It's a Local File (Phone Storage)
+      // 3. Phone Gallery File
       return Image.file(
         File(path),
         fit: BoxFit.cover,

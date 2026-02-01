@@ -74,7 +74,7 @@ class RecipeNotifier extends StateNotifier<List<Recipe>> {
         difficulty: 'Medium',
         calories: '600 kcal',
         protein: '20g',
-        imageUrl: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=500&q=60',
+        imageUrl: 'assets/images/pasta_carbonara.jpg',
         ingredients: ['200g Spaghetti', '2 Large Eggs', '100g Pancetta', '50g Parmesan', 'Black Pepper'],
         instructions: [
           'Boil a large pot of salted water and cook spaghetti until al dente.',

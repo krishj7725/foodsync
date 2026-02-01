@@ -1,4 +1,4 @@
-import 'dart:io'; // <--- Need this for File handling
+import 'dart:io'; // <--- Required for File
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/recipe.dart'; 
@@ -51,7 +51,6 @@ class RecipeDetailScreen extends ConsumerWidget {
                   child: const Icon(Icons.delete_outline, color: Colors.white, size: 20),
                 ),
                 onPressed: () {
-                  // Show Confirmation Dialog
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
@@ -64,13 +63,9 @@ class RecipeDetailScreen extends ConsumerWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            // 1. Delete Recipe
                             ref.read(recipeProvider.notifier).deleteRecipe(recipe.id);
-                            // 2. Close Dialog
                             Navigator.pop(ctx);
-                            // 3. Go back to main screen
                             Navigator.pop(context);
-                            // 4. Show success message
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Recipe Deleted')),
                             );
@@ -222,10 +217,16 @@ class RecipeDetailScreen extends ConsumerWidget {
     );
   }
 
-  // --- HELPER FUNCTION FOR IMAGE ---
+  // --- UPDATED HELPER FOR ASSETS ---
   Widget _buildRecipeImage(String path) {
     if (path.startsWith('http')) {
       return Image.network(
+        path,
+        fit: BoxFit.cover,
+        errorBuilder: (c, e, s) => Container(color: Colors.grey[300]),
+      );
+    } else if (path.startsWith('assets/')) {
+      return Image.asset(
         path,
         fit: BoxFit.cover,
         errorBuilder: (c, e, s) => Container(color: Colors.grey[300]),
