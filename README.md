@@ -2,7 +2,7 @@
 
 **FoodSync** is a smart mobile application built with **Flutter** and **Riverpod** that bridges the gap between meal planning and grocery shopping. It solves the common disconnect between discovering recipes and actually buying the ingredients.
 
-> **Repo:** [https://github.com/krishj7725/FoodSync](https://github.com/krishj7725/FoodSync)
+> **Repo:** [https://github.com/krishj7725/foodsync](https://github.com/krishj7725/foodsync)
 
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
@@ -29,9 +29,7 @@
 
 | Grocery List | Recipe Detail | Add Recipe |
 |:---:|:---:|:---:|
-| <img src="https://via.placeholder.com/200x400?text=Grocery+List" width="200" /> | <img src="https://via.placeholder.com/200x400?text=Recipe+Detail" width="200" /> | <img src="https://via.placeholder.com/200x400?text=Add+Recipe" width="200" /> |
-
-*(Update these links with your actual screenshots after uploading them to the repo)*
+| <img src="assets/screenshots/grocery_list.png" width="200" /> | <img src="assets/screenshots/recipe_detail.png" width="200" /> | <img src="assets/screenshots/add_recipe.png" width="200" /> |
 
 ## 🛠️ Tech Stack & Architecture
 
