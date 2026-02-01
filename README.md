@@ -87,4 +87,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Built with ❤️ by [Krishj7725](https://github.com/krishj7725)**
+## 📬 Contact
+
+**Krish Jain** - **LinkedIn:** [linkedin.com/in/krishj7725](https://www.linkedin.com/in/krishj7725/)  
+- **Email:** [krishjain7725@gmail.com](mailto:krishjain7725@gmail.com)  
+- **GitHub:** [@krishj7725](https://github.com/krishj7725)
+
+Project Link: [https://github.com/krishj7725/FoodSync](https://github.com/krishj7725/FoodSync)
