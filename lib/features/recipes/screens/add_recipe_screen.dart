@@ -1,7 +1,7 @@
-import 'dart:io'; // Needed for File
+import 'dart:io'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart'; // Needed for Gallery
+import 'package:image_picker/image_picker.dart'; 
 import '../models/recipe.dart';
 import '../providers/recipe_provider.dart';
 
@@ -21,7 +21,7 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
   final _instructionsController = TextEditingController();
   
   String _selectedDifficulty = 'Easy';
-  File? _selectedImage; // Stores the local image file
+  File? _selectedImage; 
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
             const Text('Overview', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             const SizedBox(height: 15),
             
-            _buildTextField(_titleController, 'Recipe Title', 'e.g. Grandma\'s Apple Pie'),
+            _buildSimpleTextField(_titleController, 'Recipe Title', 'e.g. Grandma\'s Apple Pie'),
             const SizedBox(height: 15),
 
             // --- IMAGE PICKER SECTION ---
@@ -57,7 +57,7 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
                   border: Border.all(color: Colors.grey[300]!),
                   image: _selectedImage != null
                       ? DecorationImage(
-                          image: FileImage(_selectedImage!), // Show local file
+                          image: FileImage(_selectedImage!), 
                           fit: BoxFit.cover,
                         )
                       : null,
@@ -79,18 +79,7 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _timeController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Cook Time',
-                      hintText: '45', 
-                      suffixText: 'mins',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                      filled: true,
-                      fillColor: Colors.grey[50],
-                    ),
-                  ),
+                  child: _buildNumberField(_timeController, 'Cook Time', '45', 'mins'),
                 ),
                 const SizedBox(width: 15),
                 Expanded(
@@ -115,11 +104,16 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
             ),
             const SizedBox(height: 15),
             
+            // --- NEW NUMBER ONLY FIELDS FOR CALORIES & PROTEIN ---
              Row(
               children: [
-                Expanded(child: _buildTextField(_caloriesController, 'Calories', 'e.g. 350 kcal')),
+                Expanded(
+                  child: _buildNumberField(_caloriesController, 'Calories', '350', 'kcal'),
+                ),
                 const SizedBox(width: 15),
-                Expanded(child: _buildTextField(_proteinController, 'Protein', 'e.g. 12g')),
+                Expanded(
+                  child: _buildNumberField(_proteinController, 'Protein', '12', 'g'),
+                ),
               ],
             ),
 
@@ -177,7 +171,6 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
     );
   }
 
-  // --- FUNCTION TO OPEN GALLERY ---
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -189,12 +182,29 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
     }
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, String hint) {
+  // Helper for regular text (Title)
+  Widget _buildSimpleTextField(TextEditingController controller, String label, String hint) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        filled: true,
+        fillColor: Colors.grey[50],
+      ),
+    );
+  }
+
+  // NEW Helper for Number Inputs (Time, Calories, Protein)
+  Widget _buildNumberField(TextEditingController controller, String label, String hint, String suffix) {
+    return TextField(
+      controller: controller,
+      keyboardType: TextInputType.number, // <--- NUMBERS ONLY
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        suffixText: suffix, // <--- SHOWS 'g' or 'kcal' automatically
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         filled: true,
         fillColor: Colors.grey[50],
@@ -209,14 +219,28 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
       return text.split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
     }
 
-    // LOGIC: If we picked an image, use its Path. If not, use a default URL.
     String finalImagePath = _selectedImage != null 
         ? _selectedImage!.path 
         : 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=60';
 
+    // --- AUTO-FORMAT LOGIC ---
+    
+    // Time: Add " min" if missing
     String finalTime = _timeController.text;
     if (finalTime.isNotEmpty && !finalTime.toLowerCase().contains('min')) {
       finalTime = '$finalTime min';
+    }
+
+    // Calories: Add " kcal" if missing
+    String finalCals = _caloriesController.text;
+    if (finalCals.isNotEmpty && !finalCals.toLowerCase().contains('kcal')) {
+      finalCals = '$finalCals kcal';
+    }
+
+    // Protein: Add "g" if missing
+    String finalProtein = _proteinController.text;
+    if (finalProtein.isNotEmpty && !finalProtein.toLowerCase().contains('g')) {
+      finalProtein = '${finalProtein}g';
     }
 
     final newRecipe = Recipe(
@@ -224,11 +248,11 @@ class _AddRecipeScreenState extends ConsumerState<AddRecipeScreen> {
       title: _titleController.text,
       time: finalTime.isEmpty ? 'N/A' : finalTime,
       difficulty: _selectedDifficulty,
-      calories: _caloriesController.text.isEmpty ? 'N/A' : _caloriesController.text,
-      protein: _proteinController.text.isEmpty ? 'N/A' : _proteinController.text,
+      calories: finalCals.isEmpty ? 'N/A' : finalCals, // Use formatted value
+      protein: finalProtein.isEmpty ? 'N/A' : finalProtein, // Use formatted value
       ingredients: parseList(_ingredientsController.text),
       instructions: parseList(_instructionsController.text),
-      imageUrl: finalImagePath, // <--- SAVING THE LOCAL PATH
+      imageUrl: finalImagePath,
     );
 
     ref.read(recipeProvider.notifier).addRecipe(newRecipe);
