@@ -7,6 +7,7 @@
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 ![Riverpod](https://img.shields.io/badge/State%20Management-Riverpod-purple?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-Passed-green?style=for-the-badge&logo=github)
 
 ## ✨ Key Features
 
@@ -18,6 +19,7 @@
 
 ### 📖 Digital Cookbook
 * **Recipe Management:** Create custom recipes with cooking time, difficulty, and nutritional stats.
+* **Smart Input:** Auto-formats text fields (e.g., typing "350" automatically saves as "350 kcal").
 * **Hybrid Image Support:** Add photos via **Internet URL** or pick directly from your **Phone Gallery**.
 * **Seamless Integration:** Transfer ingredients from any recipe directly to your grocery list with a single tap.
 
@@ -35,6 +37,7 @@
 
 * **Framework:** Flutter (Dart)
 * **State Management:** Riverpod 2.0 (ConsumerWidgets, StateNotifiers)
+* **Testing:** Unit Tests for business logic (Providers & Models) using `flutter_test`.
 * **Local Storage:** Shared Preferences (JSON Serialization)
 * **Plugins:** `image_picker`, `google_nav_bar`, `shared_preferences`
 * **Architecture:** Feature-first folder structure for scalability.
@@ -51,12 +54,12 @@ Follow these steps to run the project locally.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/krishj7725/FoodSync.git](https://github.com/krishj7725/FoodSync.git)
+    git clone [https://github.com/krishj7725/foodsync.git](https://github.com/krishj7725/foodsync.git)
     ```
 
 2.  **Navigate to the project directory:**
     ```bash
-    cd FoodSync
+    cd foodsync
     ```
 
 3.  **Install dependencies:**
@@ -91,4 +94,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - **Email:** [krishjain7725@gmail.com](mailto:krishjain7725@gmail.com)  
 - **GitHub:** [@krishj7725](https://github.com/krishj7725)
 
-Project Link: [https://github.com/krishj7725/FoodSync](https://github.com/krishj7725/FoodSync)
+Project Link: [https://github.com/krishj7725/foodsync](https://github.com/krishj7725/foodsync)
